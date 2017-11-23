@@ -1,0 +1,2 @@
+class StartOutOfOffice < ApplicationRecord
+end

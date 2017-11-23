@@ -1,0 +1,2 @@
+class EndOutOfOffice < ApplicationRecord
+end

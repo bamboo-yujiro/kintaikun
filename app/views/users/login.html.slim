@@ -1,0 +1,10 @@
+h1 Login
+
+= flash[:alert]
+= form_for @login_form, :url => {:action => 'login_post'} do |f|
+  = f.text_field :email, :class => 'loginFormEmail', :placeholder => 'メールアドレス'
+  = f.password_field :password, :class => 'loginFormPass', :placeholder => 'パスワード'
+  div
+    input.mailLoginBtn type="submit" value="ログイン" /
+
+

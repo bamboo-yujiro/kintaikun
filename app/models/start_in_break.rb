@@ -1,0 +1,2 @@
+class StartInBreak < ApplicationRecord
+end
