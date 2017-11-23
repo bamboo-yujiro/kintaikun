@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
 
+  include Services::Session
+
   def new
     @user = User.new
   end
@@ -19,13 +21,14 @@ class UsersController < ApplicationController
 
   def login_post
     @login_form = LoginForm.new
-    if @login_form.login(params)
-      flash.now[:notice] =  'ログインしました。'
-      redirect_to '/'
+    if !@login_form.login(params)
+      flash.now[:alert] =  'Emailかパスワードが間違っています。'
+      render action: 'login'
       return
     end
-    flash.now[:alert] =  'Emailかパスワードが間違っています。'
-    render action: 'login'
+    log_in(@login_form.user)
+    flash.now[:notice] =  'ログインしました。'
+    redirect_to '/'
   end
 
 end

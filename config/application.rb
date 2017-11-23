@@ -27,5 +27,9 @@ module KintaikunCom
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+    config.autoload_paths += %W(#{config.root}/app) # services を Services:: ネームスペースで使うため
+    Dir[Rails.root.join('lib/extensions/*.rb')].sort.each do |file|
+      require file
+    end
   end
 end
