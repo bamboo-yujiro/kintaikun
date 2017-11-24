@@ -6,13 +6,13 @@ module Services
         <table>
           <thead>
             <tr>
-              <td>日付</td>
-              <td>曜日</td>
-              <td>出社時刻</td>
-              <td>退社時刻</td>
-              <td>労働時間</td>
-              <td>休憩時間</td>
-              <td>外出時間</td>
+              <th>日付</th>
+              <th>曜日</th>
+              <th>出社時刻</th>
+              <th>退社時刻</th>
+              <th>労働時間</th>
+              <th>休憩時間</th>
+              <th>外出時間</th>
             </tr>
           </thead>
           <tbody>

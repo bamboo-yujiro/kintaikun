@@ -14,7 +14,7 @@ class Attendance < ApplicationRecord
   end
 
   def self.save_today(user_id)
-    self.where(user_id: user_id, date: Date.today).first
+    self.create(user_id: user_id, date: Date.today)
   end
 
   def sum_break_time(format="%H:%M")

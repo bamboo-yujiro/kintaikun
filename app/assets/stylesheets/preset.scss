@@ -1,0 +1,29 @@
+@for $i from 1 through 20 {
+  .w#{5 * $i} {
+    width: #{percentage(5 * $i / 100)} !important;
+  }
+}
+@for $i from 1 through 40 {
+  .w#{5 * $i}px {
+    width: #{(5 * $i)}px !important;
+  }
+}
+@for $i from 1 through 30 {
+  .fs#{$i}px {
+    font-size: #{$i}px !important;
+  }
+}
+@for $i from 1 through 30 {
+  .ml#{5 * $i}px {
+    margin-left: #{(5 * $i)}px !important;
+  }
+  .mr#{5 * $i}px {
+    margin-right: #{(5 * $i)}px !important;
+  }
+  .mt#{5 * $i}px {
+    margin-top: #{(5 * $i)}px !important;
+  }
+  .mb#{5 * $i}px {
+    margin-bottom: #{(5 * $i)}px !important;
+  }
+}

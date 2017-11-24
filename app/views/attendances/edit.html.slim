@@ -1,10 +1,10 @@
 h1 出退勤記録
 
 div
-  | 今日は 11月24日（金）です。
+  | 今日は #{Date.today.strftime("%m月%d日（#{Date::WD[Time.now.wday]}）")} です。
 
 div
-  | 15:13 43
+  p.time
 
 div.action
   - Constants::Attendance::STATUS_CHANGE_BTN.each_with_index do |status,key|
@@ -14,7 +14,7 @@ div.action
     a href=sheet_attendances_url
       | 勤務表確認
   p
-    | 現在状況 #{@attendance.status_text}
+    | 現在状況 : #{@attendance.status_text}
 
 css:
   .statusChangeBtn {
@@ -40,4 +40,15 @@ javascript:
       .appendTo(document.body)
       .submit();
     });
+    showClock();
+    function showClock() {
+       var nowTime = new Date();
+       var nowHour = ('00' + nowTime.getHours()).slice(-2);
+       var nowMin  = ('00' + nowTime.getMinutes()).slice(-2);
+       var nowSec  = ('00' + nowTime.getSeconds()).slice(-2);
+       var msg = nowHour + ":" + nowMin + ":" + nowSec;
+       $('p.time').text(msg);
+    }
+    setInterval(showClock,1000);
+
   });
