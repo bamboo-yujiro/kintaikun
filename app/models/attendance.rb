@@ -9,6 +9,14 @@ class Attendance < ApplicationRecord
     self.includes(has_many_model_array).references(has_many_model_array).where(user_id: user_id).where(date: date_range)
   end
 
+  def self.today(user_id)
+    self.where(user_id: user_id, date: Date.today).first
+  end
+
+  def self.save_today(user_id)
+    self.where(user_id: user_id, date: Date.today).first
+  end
+
   def sum_break_time(format="%H:%M")
     sec = start_in_breaks.zip(end_in_breaks).reduce(0) do |accumulator, s|
       accumulator += s[1].time - s[0].time
@@ -23,5 +31,8 @@ class Attendance < ApplicationRecord
     Time.at(sec).utc.strftime(format)
   end
 
+  def status_text(type=:ja)
+    Constants::Attendance::STATUS[status][type]
+  end
 
 end

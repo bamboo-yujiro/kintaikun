@@ -1,0 +1,46 @@
+h1 出退勤記録
+
+div
+  | 今日は 11月24日（金）です。
+
+div
+  | 15:13 43
+
+div.action
+  p data-to-status=1
+    | 出社
+  p data-to-status=2
+    | 休憩
+  p data-to-status=3
+    | 外出
+  p data-to-status=1
+    | 戻り
+  p data-to-status=4
+    | 退社
+  p
+    | 勤務表確認
+  p
+    | 現在状況
+
+css:
+  .action p{
+    cursor: pointer;
+  }
+
+javascript:
+  $(function(){
+    var attendanceId = #{@attendance.id};
+    var token = '#{form_authenticity_token}';
+    $('.action p').click(function(){
+      var str = '「' + $(this).text().trim() + '」 の記録をします。よろしいですか？';
+      if(!confirm(str)){
+        return false;
+      }
+      $('<form/>', {action: "/attendances/"+attendanceId, method: 'post'})
+      .append($('<input/>', {type: 'hidden', name: 'authenticity_token', value: token}))
+      .append($('<input/>', {type: 'hidden', name: '_method', value: 'patch'}))
+      .append($('<input/>', {type: 'hidden', name: 'to_status', value: $(this).attr('data-to-status')}))
+      .appendTo(document.body)
+      .submit();
+    });
+  });
