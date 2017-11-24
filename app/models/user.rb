@@ -1,8 +1,9 @@
 class User < ApplicationRecord
-  validates :name, :password, :name, presence:  {message: 'は必須です。'}
-  validates :email, uniqueness: {message: '重複'}
+  validates :name, presence:  {message: '名前は必須です。'}
+  validates :email,
+    uniqueness: {message: 'ご指定のメールアドレスは既に登録されています。'},
+    format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i, message: 'Emailアドレスの形式がおかしいです。' }
   has_secure_password
-  validate :check_password
 
   def self.new_remember_token
     SecureRandom.urlsafe_base64
@@ -10,14 +11,6 @@ class User < ApplicationRecord
 
   def self.encrypt(token)
     Digest::SHA1.hexdigest(token.to_s)
-  end
-
-  def check_password
-    errors[:password].clear if defined?(errors[:password])
-    errors[:password_confirmation].clear if defined?(errors[:password_confirmation])
-    if password != password_confirmation
-      errors.add(:password, "が一致してません")
-    end
   end
 
 end

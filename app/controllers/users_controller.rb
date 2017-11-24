@@ -1,7 +1,5 @@
 class UsersController < ApplicationController
 
-  include Services::Session
-
   def new
     @user = User.new
   end
@@ -9,8 +7,9 @@ class UsersController < ApplicationController
   def create
     @user = User.new(params.require(:user).permit(:name, :email, :password, :password_confirmation))
     if @user.save
-      redirect_to '/', :notice => "ユーザー作成しました"
+      redirect_to '/', notice: 'ユーザーを作成しました'
     else
+      flash.now[:alert] = 'ユーザーの作成に失敗しました。'
       render action: 'new'
     end
   end
@@ -29,6 +28,11 @@ class UsersController < ApplicationController
     log_in(@login_form.user)
     flash.now[:notice] =  'ログインしました。'
     redirect_to '/'
+  end
+
+  def logout
+    log_out
+    redirect_to ''
   end
 
 end

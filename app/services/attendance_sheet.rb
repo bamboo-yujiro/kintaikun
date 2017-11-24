@@ -28,17 +28,15 @@ module Services
 
     def self.make_sheet(year, month, attendances_array)
       html = start_html
-      #（後で参照しやすいように0月の0日を設定）
+      # 該当月の末日
       end_days_array = Date::leap_year_judge(year) ? Date::LEAP_YEAR_END_DAYS_ARRAY : Date::END_DAYS_ARRAY
       # 曜日
       current_day = Date::calc_day(year,month)
-      # 該当月の末日
       (1..end_days_array[month]).each do |date|
         patted_date = '%02d' % date
         day_str = Date::DAY_STR_ARRAY[current_day][:ja]
         date_obj = Date.custom_date_parse("#{year}-#{month}-#{patted_date}")
         date_str = "#{month}月#{patted_date}日"
-        # ここで tr を作っていく
         html << <<-EOS
           <tr>
         EOS
@@ -71,10 +69,10 @@ module Services
         html << <<-EOS
           </tr>
         EOS
-        # ここで tr を作っていく
         current_day += 1
         current_day = 0 if current_day > 6
       end
+      ## TODO 総累計時間の計算
       end_html(html)
     end
 

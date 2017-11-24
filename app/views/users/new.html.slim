@@ -1,0 +1,18 @@
+h1 New
+
+= flash[:alert]
+ul
+- @user.errors.full_messages.each do |msg|
+  li = msg
+= form_for @user do |f|
+  div
+    = f.text_field :name, class: 'name', placeholder: 'お名前'
+  div
+    = f.text_field :email, class: 'email', placeholder: 'メールアドレス'
+  div
+    = f.password_field :password, class: 'password', placeholder: 'パスワード'
+  div
+    = f.password_field :password_confirmation, class: 'password', placeholder: 'パスワード確認'
+  div
+    input.mailLoginBtn type="submit" value="登録" /
+

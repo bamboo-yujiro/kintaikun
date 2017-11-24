@@ -1,0 +1,12 @@
+h1 Top
+
+- if @current_user
+  = "ようこそ #{@current_user.name} さん"
+  div
+    = link_to logout_users_url, method: :delete
+      | ログアウト
+- else
+  div
+    a href=url_for(login_users_url)
+      | ログイン
+
