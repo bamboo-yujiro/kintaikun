@@ -26,6 +26,8 @@ module KintaikunCom
     # -- all .rb files in that directory are automatically loaded.
 
     # Don't generate system test files.
+    config.time_zone = 'Tokyo'
+    config.active_record.default_timezone = :local
     config.generators.system_tests = nil
     config.autoload_paths += %W(#{config.root}/app) # services を Services:: ネームスペースで使うため
     Dir[Rails.root.join('lib/extensions/*.rb')].sort.each do |file|

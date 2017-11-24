@@ -13,7 +13,8 @@ class AttendancesController < ApplicationController
 
   def update#TODO status 遷移の検証
     @attendance = Attendance.find(params[:id])
-    @attendance.update(status: params[:to_status])
+    status_change_btn = Constants::Attendance::STATUS_CHANGE_BTN[params[:change_status_btn_key].to_i]
+    @attendance.change_status(status_change_btn)
     redirect_to action: :edit, id: @attendance.id
   end
 

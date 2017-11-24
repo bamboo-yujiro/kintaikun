@@ -7,31 +7,28 @@ div
   | 15:13 43
 
 div.action
-  p data-to-status=1
-    | 出社
-  p data-to-status=2
-    | 休憩
-  p data-to-status=3
-    | 外出
-  p data-to-status=1
-    | 戻り
-  p data-to-status=4
-    | 退社
+  - Constants::Attendance::STATUS_CHANGE_BTN.each_with_index do |status,key|
+    p class="statusChangeBtn #{'disable' if !@attendance.is_status_avairable(status)}" change-status-btn-key=key
+      | #{status[:text]}
   p
-    | 勤務表確認
+    a href=sheet_attendances_url
+      | 勤務表確認
   p
-    | 現在状況
+    | 現在状況 #{@attendance.status_text}
 
 css:
-  .action p{
+  .statusChangeBtn {
     cursor: pointer;
+  }
+  .disable {
+    color: #999;
   }
 
 javascript:
   $(function(){
     var attendanceId = #{@attendance.id};
     var token = '#{form_authenticity_token}';
-    $('.action p').click(function(){
+    $('.statusChangeBtn:not(.disable)').click(function(){
       var str = '「' + $(this).text().trim() + '」 の記録をします。よろしいですか？';
       if(!confirm(str)){
         return false;
@@ -39,7 +36,7 @@ javascript:
       $('<form/>', {action: "/attendances/"+attendanceId, method: 'post'})
       .append($('<input/>', {type: 'hidden', name: 'authenticity_token', value: token}))
       .append($('<input/>', {type: 'hidden', name: '_method', value: 'patch'}))
-      .append($('<input/>', {type: 'hidden', name: 'to_status', value: $(this).attr('data-to-status')}))
+      .append($('<input/>', {type: 'hidden', name: 'change_status_btn_key', value: $(this).attr('change-status-btn-key')}))
       .appendTo(document.body)
       .submit();
     });
