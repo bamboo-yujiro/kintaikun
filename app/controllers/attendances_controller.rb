@@ -1,6 +1,12 @@
 class AttendancesController < ApplicationController
 
-  def index
+  before_action :redirect_if_not_login
+
+  def redirect_if_not_login
+    redirect_to login_users_url, notice: 'ログインしてください。' if !@current_user
+  end
+
+  def index#この形でいいか保留 TODO
     a = Attendance.today(@current_user.id)
     a = Attendance.save_today(@current_user.id) if !a
     redirect_to action: :edit, id: a.id
