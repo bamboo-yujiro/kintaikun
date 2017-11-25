@@ -36,6 +36,8 @@ module Services
         EOS
         if attendances_array.first && date_obj == attendances_array.first.date
           if attendances_array.first.status_text(:en) == 'clock_out'#退勤済み
+            arrival_time = attendances_array.first.arrival_time.strftime("%H:%M")
+            leaving_time = attendances_array.first.leaving_time.strftime("%H:%M")
             difference_sec = attendances_array.first.leaving_time - attendances_array.first.arrival_time
             total_work_sec += difference_sec
             working_time = Time.at(difference_sec).utc.strftime('%H:%M')
