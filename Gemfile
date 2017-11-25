@@ -50,3 +50,9 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'bcrypt', '~> 3.1.10'
 gem 'slim-rails'
 gem 'virtus'
+gem 'capistrano', '~> 3.4.0'
+gem 'capistrano-rails', '~> 1.1.3'
+gem 'capistrano-bundler'
+gem 'capistrano-rbenv'
+gem 'capistrano3-unicorn' #Unicornの起動を簡単に行える
+gem 'capistrano-npm'

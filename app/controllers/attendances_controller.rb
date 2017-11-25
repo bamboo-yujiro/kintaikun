@@ -1,5 +1,4 @@
 class AttendancesController < ApplicationController
-
   before_action :redirect_if_not_login
 
   def redirect_if_not_login
