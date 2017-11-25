@@ -70,8 +70,6 @@ namespace :npm do
     end
   end
 
-  before 'deploy:updated', 'npm:install' # deploy:updateの前に npm:install を実行する
-  # ...
 end
 
 namespace :deploy do
