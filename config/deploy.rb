@@ -49,7 +49,9 @@ set :keep_releases, 5
 
 #end
 
-before 'deploy:assets:precompile', 'npm:install'
+#before 'deploy:assets:precompile', 'npm:install'
+#after 'deploy:updated', 'npm:install'
+set :npm_target_path, -> { release_path.join('node_modules') } # default not set
 after 'deploy:publishing', 'deploy:restart'
 namespace :deploy do
 
@@ -62,7 +64,7 @@ end
 
 namespace :npm do
   desc <<-DESC
-    # 省略
+    てすとだよー
   DESC
   task :install do  # npm:install タスクを作成
     on roles fetch(:npm_roles) do
