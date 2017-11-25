@@ -70,7 +70,7 @@ class Date
         date = ::Date.parse(str)
       # parseで処理しきれない場合
       rescue ArgumentError #TODO
-        formats = ['%Y:%m:%d %H:%M:%S'] # 他の形式が必要になったら、この配列に追加
+        formats = ['%Y:%m:%d', '%H:%M:%S', '%Y:%m']
         formats.each do |format|
           begin
             date = ::DateTime.strptime(str, format)
@@ -85,6 +85,17 @@ class Date
 
   def self.get_date_str_with_format(date, format="%Y/%m/%d")
     date.strftime(format)
+  end
+
+  def self.get_year_month_daterange(year_month_str)
+    year_month_str += '-01'
+    d = self.custom_date_parse(year_month_str)
+    if !d
+      raise ArgumentError, 'Date形式がおかしいです。'
+    end
+    y = d.strftime('%Y').to_i; m = d.strftime('%m').to_i
+    hash = self.get_start_end_day(year:y,month:m)
+    return y, m, hash[:start_day]..hash[:end_day]
   end
 
 end

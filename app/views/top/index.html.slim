@@ -1,4 +1,7 @@
 h1 Top
 
-a href=url_for(attendances_url)
-  | 勤怠表
+- if @current_user
+  a href=url_for(attendances_url)
+    | 出退勤記録
+- else
+  | ログイン、もしくは新規登録しましょう。

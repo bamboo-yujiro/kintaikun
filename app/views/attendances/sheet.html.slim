@@ -1,5 +1,8 @@
-h1 Attendances
+h1 勤務表
 
-= @current_user.name
+form.common_form method="get"
+  input.mr10px type="month" name="month" value="#{params[:month] ? params[:month] : Date.today.strftime('%Y-%m')}" style="width: initial; margin: 0;"
+  button.blue type="submit"
+    | 選択
 
 == @html

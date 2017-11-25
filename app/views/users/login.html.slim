@@ -1,10 +1,17 @@
-h1 Login
+h1 ログイン
 
 = flash[:alert]
-= form_for @login_form, url: {action: 'login_post'} do |f|
-  = f.text_field :email, class: 'loginFormEmail', placeholder: 'メールアドレス'
-  = f.password_field :password, class: 'loginFormPass', placeholder: 'パスワード'
+= form_for @login_form, url: {action: 'login_post'}, html: {class: 'common_form'} do |f|
   div
-    input.mailLoginBtn type="submit" value="ログイン" /
-
-
+    label
+      | メールアドレス
+  div
+    = f.text_field :email, class: 'loginFormEmail', placeholder: 'メールアドレス'
+  div
+    label
+      | パスワード
+  div.mb10px
+    = f.password_field :password, class: 'loginFormPass', placeholder: 'パスワード'
+  div
+    button.blue type="submit"
+      | ログイン

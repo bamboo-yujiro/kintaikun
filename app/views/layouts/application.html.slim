@@ -1,6 +1,7 @@
 doctype html
-html
+html lang="ja"
   head
+    meta http-equiv="content-language" content="ja"
     title 勤怠くん
     = csrf_meta_tags
     = stylesheet_link_tag 'application.css'
@@ -9,12 +10,14 @@ html
     div.header.clearfix
       div.container.clearfix
         div#logo.fl-l
-          h1 勤怠くん - ジモティー課題
+          h1
+            a href="/"
+              | 勤怠くん - ジモティー課題
         div#user.fl-r
           - if @current_user
             p.fl-r.clearfix
               | こんにちは。&nbsp;
-              a
+              a.popupTrigger
                 | #{@current_user.name} さん
           - else
             p.fl-r.clearfix
@@ -22,75 +25,25 @@ html
                 | ログイン
               a href=url_for(new_user_url)
                 | 新規登録
-      .popover.js-popover.popover--menu.popover--userActions.popover--globalNav.u-resetSpectrum.popover--bottom.u-fixed.is-active
-        .popover-inner.js-popover-inner
-          ul
-            li
-              = link_to 'ログアウト', logout_users_url, method: :delete
-        .popover-arrow style=("left: 130px;")
-
+      - if @current_user
+        .popover.js-popover.popover--menu.popover--bottom.u-fixed.dspNone
+          .popover-inner
+            ul
+              li
+                = link_to 'ログアウト', logout_users_url, method: :delete
+          .popover-arrow style=("left: 130px;")
     div#wrapper
-
       = yield
 
-css:
-  .popover {
-      left: 1020.5px;
-      top: 41px;
-      box-sizing: border-box;
-      width: 260px;
-      /*height: 368px;*/
-  }
-  .popover{
-    color: rgba(0,0,0,.84);
-    overflow: hidden;
-    position: absolute;
-    z-index: 900;
-    font-size: 15px;
-    text-align: center;
-    padding: 15px;
-    pointer-events: auto;
-  }
-  .popover--menu>.popover-inner {
-      padding: 8px 0;
-      overflow: auto;
-      -webkit-overflow-scrolling: touch;
-  }
-  .popover-inner {
-      position: relative;
-      max-width: 280px;
-      padding: 14px;
-      background: #fff;
-      -webkit-border-radius: 3px;
-      border-radius: 3px;
-      -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.25), 0 0 1px rgba(0,0,0,.35);
-      box-shadow: 0 1px 2px rgba(0,0,0,.25), 0 0 1px rgba(0,0,0,.35);
-      font-size: 12px;
-  }
-  .popover--bottom .popover-arrow {
-      top: 1px;
-      clip: rect(0 18px 14px -4px);
-      position: absolute;
-  }
-  .u-fixed {
-    position: fixed!important;
-  }
-  .popover-arrow:after {
-    content: '';
-    display: block;
-    width: 14px;
-    height: 14px;
-    background: #fff;
-  }
-  .popover-arrow:after {
-    -webkit-transform: rotate(45deg) translate(6px,6px);
-    transform: rotate(45deg) translate(6px,6px);
-    -webkit-box-shadow: -1px -1px 1px -1px rgba(0,0,0,.54);
-    box-shadow: -1px -1px 1px -1px rgba(0,0,0,.54);
-  }
-  .popover--bottom .popover-arrow, .popover--top .popover-arrow {
-    left: 50%;
-  }
-  li{
-    color: rgba(0, 0, 0, 0.6) !important;
-  }
+javascript:
+  $(function(){
+    $('.popupTrigger').click(function(){
+      var a = '.popover';
+      if($(a).css('display') == 'none'){
+        var center = $(this).offset().left + $(this).width() / 2;
+        $(a).css({left: center - $(a).outerWidth() / 2}).show();
+      }else{
+        $(a).hide();
+      }
+    });
+  });

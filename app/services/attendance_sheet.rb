@@ -41,15 +41,23 @@ module Services
           <tr>
         EOS
         if attendances_array.first && date_obj == attendances_array.first.date
-          difference_sec = attendances_array.first.leaving_time - attendances_array.first.arrival_time
-          working_time = Time.at(difference_sec).utc.strftime('%H:%M')
-          sum_break_time = attendances_array.first.sum_break_time
-          sum_out_office_time = attendances_array.first.sum_out_office_time
+          if attendances_array.first.status_text(:en) == 'clock_out'
+            difference_sec = attendances_array.first.leaving_time - attendances_array.first.arrival_time
+            working_time = Time.at(difference_sec).utc.strftime('%H:%M')
+            sum_break_time = attendances_array.first.sum_break_time
+            sum_out_office_time = attendances_array.first.sum_out_office_time
+          else
+            arrival_time = attendances_array.first.arrival_time.strftime("%H:%M") if attendances_array.first.arrival_time
+            leaving_time = attendances_array.first.leaving_time.strftime("%H:%M") if attendances_array.first.leaving_time
+            working_time = ''
+            sum_break_time = ''
+            sum_out_office_time = ''
+          end
           html << <<-EOS
             <td>#{date_str}</td>
             <td>#{day_str}</td>
-            <td>#{attendances_array.first.arrival_time.strftime("%H:%M")}</td>
-            <td>#{attendances_array.first.leaving_time.strftime("%H:%M")}</td>
+            <td>#{arrival_time}</td>
+            <td>#{leaving_time}</td>
             <td>#{working_time}</td>
             <td>#{sum_break_time}</td>
             <td>#{sum_out_office_time}</td>

@@ -1,18 +1,31 @@
-h1 New
+h1 新規登録
 
 = flash[:alert]
 ul
 - @user.errors.full_messages.each do |msg|
   li = msg
-= form_for @user do |f|
+= form_for @user, html: {class: 'common_form'} do |f|
+  div
+    label
+      | お名前
   div
     = f.text_field :name, class: 'name', placeholder: 'お名前'
   div
+    label
+      | メールアドレス
+  div
     = f.text_field :email, class: 'email', placeholder: 'メールアドレス'
+  div
+    label
+      | パスワード
   div
     = f.password_field :password, class: 'password', placeholder: 'パスワード'
   div
+    label
+      | パスワード確認
+  div.mb10px
     = f.password_field :password_confirmation, class: 'password', placeholder: 'パスワード確認'
   div
-    input.mailLoginBtn type="submit" value="登録" /
+    button.blue type="submit"
+      | 登録
 

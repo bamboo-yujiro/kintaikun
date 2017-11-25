@@ -41,12 +41,17 @@ class Attendance < ApplicationRecord
   end
 
   def change_status(status_change_btn)
-    raise '不正操作' if !is_status_avairable(status_change_btn)#遷移不可能なステータス
-    if status_change_btn[:identifier] == 'break'
+    raise '不正操作が行われました。' if !is_status_avairable(status_change_btn)#遷移不可能なステータス
+    case status_change_btn[:identifier]
+    when 'arrival' then
+      update(arrival_time: Time.now)
+    when 'clock_out' then
+      update(leaving_time: Time.now)
+    when 'break' then
       start_in_breaks.create(time: Time.now)
-    elsif status_change_btn[:identifier] == 'go_out'
+    when 'go_out' then
       start_out_of_offices.create(time: Time.now)
-    elsif status_change_btn[:identifier] == 'back'
+    when 'back' then
       end_in_breaks.create(time: Time.now) if status_text(:en) == 'in_break'
       end_out_of_offices.create(time: Time.now) if status_text(:en) == 'out_of_office'
     end

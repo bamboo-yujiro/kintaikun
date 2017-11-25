@@ -7,14 +7,17 @@ div
   p.time
 
 div.action
-  - Constants::Attendance::STATUS_CHANGE_BTN.each_with_index do |status,key|
-    p class="statusChangeBtn #{'disable' if !@attendance.is_status_avairable(status)}" change-status-btn-key=key
-      | #{status[:text]}
+  div.clearfix#changeStatusWrap
+    - Constants::Attendance::STATUS_CHANGE_BTN.each_with_index do |status,key|
+      button class="statusChangeBtn mr20px #{@attendance.is_status_avairable(status) ? 'green' : 'disable gray'}" change-status-btn-key=key
+        | #{status[:text]}
+  p
+    | 現在状況 :&nbsp;
+    b
+      = @attendance.status_text
   p
     a href=sheet_attendances_url
       | 勤務表確認
-  p
-    | 現在状況 : #{@attendance.status_text}
 
 css:
   .statusChangeBtn {
@@ -22,6 +25,12 @@ css:
   }
   .disable {
     color: #999;
+  }
+  #changeStatusWrap {
+    margin: 0px 0 30px 0;
+  }
+  .action p {
+    margin-bottom: 25px;
   }
 
 javascript:
