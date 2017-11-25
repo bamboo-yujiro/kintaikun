@@ -1,15 +1,20 @@
 h1 新規登録
 
-= flash[:alert]
-ul
-- @user.errors.full_messages.each do |msg|
-  li = msg
+div.flashError.mb15px
+  = flash[:alert]
+
+- @user.errors.any?
+  div.errorWrapper.mb15px
+    ul
+      - @user.errors.full_messages.each do |msg|
+        li = msg
+
 = form_for @user, html: {class: 'common_form'} do |f|
   div
     label
       | お名前
   div
-    = f.text_field :name, class: 'name', placeholder: 'お名前'
+    = f.text_field :name, class: 'name', placeholder: '4文字以上、16文字以内'
   div
     label
       | メールアドレス
@@ -19,12 +24,12 @@ ul
     label
       | パスワード
   div
-    = f.password_field :password, class: 'password', placeholder: 'パスワード'
+    = f.password_field :password, class: 'password', placeholder: '8文字以上、16文字以内'
   div
     label
       | パスワード確認
   div.mb10px
-    = f.password_field :password_confirmation, class: 'password', placeholder: 'パスワード確認'
+    = f.password_field :password_confirmation, class: 'password', placeholder: '8文字以上、16文字以内'
   div
     button.blue type="submit"
       | 登録

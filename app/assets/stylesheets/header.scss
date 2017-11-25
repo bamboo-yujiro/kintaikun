@@ -40,6 +40,9 @@
   clip: rect(0 18px 14px -4px);
   position: absolute;
 }
+.popover-arrow{
+  width: 130px;/**/
+}
 .popover-arrow:after {
   content: '';
   display: block;

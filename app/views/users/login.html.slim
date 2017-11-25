@@ -1,6 +1,11 @@
 h1 ログイン
 
-= flash[:alert]
+div.flashSuccess.mb15px
+  = flash[:notice]
+
+div.flashError.mb15px
+  = flash[:alert]
+
 = form_for @login_form, url: {action: 'login_post'}, html: {class: 'common_form'} do |f|
   div
     label

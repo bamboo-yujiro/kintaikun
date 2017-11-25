@@ -38,6 +38,10 @@ h1,h2,h3,h4,h5{
   float:right !important;
 }
 
+.dspNone{
+  display: none;
+}
+
 .header{
   width: 100%;
   height: 57px!important;
@@ -132,6 +136,23 @@ form.common_form{
   font-size: 25px;
 }
 
-.dspNone{
-  display: none;
+div.errorWrapper{
+  padding: 20px;
+  max-width: 340px;
+  margin-right:auto;
+  margin-left:auto;
+  border: 1px solid red;
+  ul {
+    margin: 0 auto;
+    li {
+      color: red;
+      line-height: 28px;
+      font-size:13px;
+    }
+  }
+}
+
+div.flashError{
+  font-size: 14px;
+  color: red;
 }
