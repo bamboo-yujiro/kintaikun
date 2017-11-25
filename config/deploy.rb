@@ -49,22 +49,18 @@ set :keep_releases, 5
 
 #end
 
+Rake::Task["npm:install"].clear
+
 #before 'deploy:assets:precompile', 'npm:install'
 #after 'deploy:updated', 'npm:install'
 set :npm_target_path, -> { release_path.join('node_modules') } # default not set
 after 'deploy:publishing', 'deploy:restart'
-namespace :deploy do
 
-  desc 'Restart application'
-  task :restart do
-    invoke 'unicorn:restart'
-  end
-
-end
+before 'deploy:updated', 'npm:install2'
 
 namespace :npm do
   desc <<-DESC
-    てすとだよー
+    npm のタスクです。
   DESC
   task :install do  # npm:install タスクを作成
     on roles fetch(:npm_roles) do
@@ -74,6 +70,15 @@ namespace :npm do
     end
   end
 
-  #before 'deploy:updated', 'npm:install' # deploy:updateの前に npm:install を実行する
+  before 'deploy:updated', 'npm:install' # deploy:updateの前に npm:install を実行する
   # ...
+end
+
+namespace :deploy do
+
+  desc 'Restart application'
+  task :restart do
+    invoke 'unicorn:restart'
+  end
+
 end
