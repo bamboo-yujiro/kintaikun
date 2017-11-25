@@ -62,7 +62,7 @@ namespace :npm do
   desc <<-DESC
     npm のタスクです。
   DESC
-  task :install do  # npm:install タスクを作成
+  task :install2 do  # npm:install タスクを作成
     on roles fetch(:npm_roles) do
       within fetch(:npm_target_path, release_path) do
         execute :npm, 'install', fetch(:npm_flags)
