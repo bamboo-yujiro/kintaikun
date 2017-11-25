@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema.define(version: 20171122072913) do
 
-  create_table "attendance_records", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "attendances", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.date "date"
     t.time "arrival_time"
     t.time "leaving_time"
@@ -20,39 +20,39 @@ ActiveRecord::Schema.define(version: 20171122072913) do
     t.integer "status", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_attendance_records_on_user_id"
+    t.index ["user_id"], name: "index_attendances_on_user_id"
   end
 
   create_table "end_in_breaks", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.integer "attendance_record_id", default: 0, null: false
+    t.integer "attendance_id", default: 0, null: false
     t.time "time"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["attendance_record_id"], name: "index_end_in_breaks_on_attendance_record_id"
+    t.index ["attendance_id"], name: "index_end_in_breaks_on_attendance_id"
   end
 
   create_table "end_out_of_offices", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.integer "attendance_record_id", default: 0, null: false
+    t.integer "attendance_id", default: 0, null: false
     t.time "time"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["attendance_record_id"], name: "index_end_out_of_offices_on_attendance_record_id"
+    t.index ["attendance_id"], name: "index_end_out_of_offices_on_attendance_id"
   end
 
   create_table "start_in_breaks", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.integer "attendance_record_id", default: 0, null: false
+    t.integer "attendance_id", default: 0, null: false
     t.time "time"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["attendance_record_id"], name: "index_start_in_breaks_on_attendance_record_id"
+    t.index ["attendance_id"], name: "index_start_in_breaks_on_attendance_id"
   end
 
   create_table "start_out_of_offices", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.integer "attendance_record_id", default: 0, null: false
+    t.integer "attendance_id", default: 0, null: false
     t.time "time"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["attendance_record_id"], name: "index_start_out_of_offices_on_attendance_record_id"
+    t.index ["attendance_id"], name: "index_start_out_of_offices_on_attendance_id"
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
