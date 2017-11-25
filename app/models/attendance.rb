@@ -17,18 +17,16 @@ class Attendance < ApplicationRecord
     self.create(user_id: user_id, date: Date.today)
   end
 
-  def sum_break_time(format="%H:%M")
-    sec = start_in_breaks.zip(end_in_breaks).reduce(0) do |accumulator, s|
+  def sum_break_sec
+    start_in_breaks.zip(end_in_breaks).reduce(0) do |accumulator, s|
       accumulator += s[1].time - s[0].time
     end
-    Time.at(sec).utc.strftime(format)
   end
 
-  def sum_out_office_time(format="%H:%M")
-    sec = start_out_of_offices.zip(end_out_of_offices).reduce(0) do |accumulator, s|
+  def sum_out_office_sec
+    start_out_of_offices.zip(end_out_of_offices).reduce(0) do |accumulator, s|
       accumulator += s[1].time - s[0].time
     end
-    Time.at(sec).utc.strftime(format)
   end
 
   def status_text(type=:ja)

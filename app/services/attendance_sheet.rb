@@ -19,19 +19,13 @@ module Services
       EOS
     end
 
-    def self.end_html(html)
-      html << <<-EOS
-          </tbody>
-        </table>
-      EOS
-    end
-
     def self.make_sheet(year, month, attendances_array)
       html = start_html
       # 該当月の末日
       end_days_array = Date::leap_year_judge(year) ? Date::LEAP_YEAR_END_DAYS_ARRAY : Date::END_DAYS_ARRAY
       # 曜日
       current_day = Date::calc_day(year,month)
+      total_work_sec = 0; total_break_sec = 0; total_outoffice_sec = 0
       (1..end_days_array[month]).each do |date|
         patted_date = '%02d' % date
         day_str = Date::DAY_STR_ARRAY[current_day][:ja]
@@ -41,11 +35,16 @@ module Services
           <tr>
         EOS
         if attendances_array.first && date_obj == attendances_array.first.date
-          if attendances_array.first.status_text(:en) == 'clock_out'
+          if attendances_array.first.status_text(:en) == 'clock_out'#退勤済み
             difference_sec = attendances_array.first.leaving_time - attendances_array.first.arrival_time
+            total_work_sec += difference_sec
             working_time = Time.at(difference_sec).utc.strftime('%H:%M')
-            sum_break_time = attendances_array.first.sum_break_time
-            sum_out_office_time = attendances_array.first.sum_out_office_time
+            sum_break_sec = attendances_array.first.sum_break_sec
+            total_break_sec += sum_break_sec
+            sum_break_time = Time.at(sum_break_sec).utc.strftime('%H:%M')
+            sum_out_office_sec = attendances_array.first.sum_out_office_sec
+            total_outoffice_sec += sum_out_office_sec
+            sum_out_office_time = Time.at(sum_out_office_sec).utc.strftime('%H:%M')
           else
             arrival_time = attendances_array.first.arrival_time.strftime("%H:%M") if attendances_array.first.arrival_time
             leaving_time = attendances_array.first.leaving_time.strftime("%H:%M") if attendances_array.first.leaving_time
@@ -80,8 +79,28 @@ module Services
         current_day += 1
         current_day = 0 if current_day > 6
       end
-      ## TODO 総累計時間の計算
-      end_html(html)
+      ## 総累計時間の計算
+      total_work_time = Time.convert_seconds_time(total_work_sec)
+      total_break_time = Time.convert_seconds_time(total_break_sec)
+      total_outoffice_time = Time.convert_seconds_time(total_outoffice_sec)
+      html << <<-EOS
+        </tbody>
+        <tfoot>
+          <tr>
+            <th colspan="4"></th>
+            <th>労働時間</th>
+            <th>休憩時間</th>
+            <th>外出時間</th>
+          </tr>
+          <tr>
+            <td colspan="4"></th>
+            <td>#{total_work_time}</th>
+            <td>#{total_break_time}</th>
+            <td>#{total_outoffice_time}</th>
+          </tr>
+        </tfoot>
+      </table>
+      EOS
     end
 
   end
