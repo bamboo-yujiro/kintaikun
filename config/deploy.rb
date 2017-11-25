@@ -49,22 +49,18 @@ set :keep_releases, 5
 
 #end
 
-Rake::Task["npm:install"].clear
+Rake::Task["npm:install"].clear#既に登録されてる npm:install タスクを消す
 
-#before 'deploy:assets:precompile', 'npm:install'
-#after 'deploy:updated', 'npm:install'
+before 'deploy:updated', 'npm:install'
 set :npm_target_path, -> { release_path.join('node_modules') } # default not set
+
 after 'deploy:publishing', 'deploy:restart'
 
-before 'deploy:updated', 'npm:install2'
-
 namespace :npm do
-  desc <<-DESC
-    npm のタスクです。
-  DESC
-  task :install2 do  # npm:install タスクを作成
+  desc "npm のタスクです。"
+  task :install do  # npm:install タスクを作成
     on roles fetch(:npm_roles) do
-      within fetch(:npm_target_path, release_path) do
+      within release_path do # これでpackage.json があるプロジェクトのルートまで入る
         execute :npm, 'install', fetch(:npm_flags)
       end
     end

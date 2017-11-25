@@ -35,8 +35,6 @@ require 'capistrano3/unicorn'
 require 'capistrano/rails/migrations'
 require 'capistrano/npm'
 
-Rake::Task["npm:install"].clear
-
 Dir.glob('lib/capistrano/tasks/*.rake').each { |r| import r }
 
 
