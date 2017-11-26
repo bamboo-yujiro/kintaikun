@@ -20,12 +20,13 @@ class UsersController < ApplicationController
 
   def login_post
     @login_form = LoginForm.new
-    if !@login_form.login(params)
+    user = @login_form.login(params)
+    if !user
       flash.now[:alert] =  'Emailかパスワードが間違っています。'
       render action: 'login'
       return
     end
-    log_in(@login_form.user)
+    log_in(user)
     redirect_to '/'
   end
 

@@ -1,16 +1,16 @@
 class LoginForm
   include ActiveModel::Model
 
-  attr_accessor :user, :password, :email
+  attr_reader :password, :email
 
   def initialize
   end
 
   def login(params)
-    self.email = params[:login_form][:email]
-    self.user = User.where(email: email).first
-    return false if self.user.nil? || self.user.password_digest.nil? # invalid hash 例外を防ぐ
-    self.user.authenticate(params[:login_form][:password])
+    @email = params[:login_form][:email]
+    user = User.where(email: email).first
+    return false if user.nil? || user.password_digest.nil? # invalid hash 例外を防ぐ
+    user.authenticate(params[:login_form][:password]) # authenticate は失敗したら false, 成功したら そのモデルのインスタンスを返す
   end
 
 end
