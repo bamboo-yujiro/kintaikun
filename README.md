@@ -1,24 +1,22 @@
-# README
+# 勤怠くん
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+### URL
+http://kintaikun.bamboo-yujiro.com/
 
-Things you may want to cover:
+### 環境
 
-* Ruby version
+Ruby 2.4.1
 
-* System dependencies
+Ruby On Rails 5.1.4
 
-* Configuration
+### テスト実行コマンド
+```$ bin/rspec spec/models/attendance_spec.rb```
 
-* Database creation
+```$ bin/rspec spec/models/user_spec.rb```
 
-* Database initialization
 
-* How to run the test suite
+### デプロイ
+```$ bin/cap production deploy --trace```
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+### データベース
+![Screenshot](https://raw.github.com/bamboo-yujiro/kintaikun/master/kintaikun_database_er.png "scr")
