@@ -14,6 +14,7 @@ Ruby On Rails 5.1.4
 
 ```$ bin/rspec spec/models/user_spec.rb```
 
+```$ bin/rspec spec/forms/login_form_spec.rb```
 
 ### デプロイ
 ```$ bin/cap production deploy --trace```
