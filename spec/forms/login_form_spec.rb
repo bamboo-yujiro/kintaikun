@@ -3,13 +3,12 @@ require 'rails_helper'
 describe LoginForm do
 
   describe '#login' do
-    before do
-      @user = User.create(name: 'Test', password: '12345678', password_confirmation: '12345678', email: 'hoge@hoge.com')
-    end
+
     context 'email と password が正常の通常ログイン' do
-      params = {login_form: {password: '12345678', email: 'hoge@hoge.com'}}
+      let!(:user){ User.create(name: 'Test', password: '12345678', password_confirmation: '12345678', email: 'hoge02@hoge.com') }
+      params = {login_form: {password: '12345678', email: 'hoge02@hoge.com'}}
       subject { LoginForm.new.login(params) }
-      it { is_expected.to eq @user }
+      it { is_expected.to eq user }
     end
 
     context 'user が存在しない場合' do
