@@ -63,4 +63,4 @@ gem 'capistrano-bundler'
 gem 'capistrano-rbenv'
 gem 'capistrano3-unicorn' #Unicornの起動を簡単に行える
 gem 'capistrano-npm'
-gem 'rake', '< 11.0'
+gem 'rake', '< 13.0'
